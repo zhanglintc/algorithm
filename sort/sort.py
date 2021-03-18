@@ -3,7 +3,23 @@
 # -*- mode: python -*-
 # vi: set ft=python :
 
+def swap_sort(a):
+    n = len(a)
+    for i in range(n):
+        for j in range(i+1, n):
+            if a[i] > a[j]:
+                a[i], a[j] = a[j], a[i]
+
+def bubble_sort(a):
+    n = len(a)
+    for i in range(n):
+        for j in range(n-1-i):
+            if a[j] > a[j+1]:
+                a[j], a[j+1] = a[j+1], a[j]
+
 def qsort(a):
+    import sys
+    sys.setrecursionlimit(3000)
     def _qsort(a, bl, br):
         if bl >= br:
             return
@@ -25,4 +41,3 @@ def qsort(a):
         _qsort(a, l+1, br)
     _qsort(a, bl=0, br=len(a)-1)
 
-qsort([5,8,6,3,4,7])
