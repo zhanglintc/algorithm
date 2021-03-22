@@ -14,6 +14,7 @@ def timer(func):
         print(f"{func.__name__}: {t2 - t1} secs")
     return wrapper
 
+@timer
 def swap_sort(a):
     n = len(a)
     for i in range(n):
@@ -50,6 +51,20 @@ def insertion_sort(a):
         a[pre_idx+1] = current
 
 @timer
+def shell_sort(a):
+    n = len(a)
+    gap = n // 2
+    while gap > 0:
+        for i in range(n):
+            pre_idx = i - gap
+            current = a[i]
+            while pre_idx >= 0 and a[pre_idx] > current:
+                a[pre_idx+gap] = a[pre_idx]
+                pre_idx -= gap
+            a[pre_idx+gap] = current
+        gap //= 2
+
+@timer
 def heap_sort(a):
     import heapq
     h = []
@@ -61,7 +76,7 @@ def heap_sort(a):
         a.append(n)
 
 @timer
-def qsort(a):
+def quick_sort(a):
     import sys
     sys.setrecursionlimit(5000)
     def _qsort(a, bl, br):

@@ -15,58 +15,47 @@ class AlgorithmSortTest(BaseMmrzTestCase):
         import sort.sort as _sort
         cls._sort = _sort
         import random
-        cls._array = [random.randint(0, 100000) for _ in range(2000)]
+        cls._array = [random.randint(0, 100000) for _ in range(3000)]
         instance = super(cls.__class__, cls).__new__(cls)
         return instance
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
 
-    @unittest.skip('pass')
-    def test_skip(self):
-        pass
+    # @unittest.skip('pass')
+
+    def sort_test_helper(self, func):
+        print()
+        pairs = [
+            ([], []),
+            ([1], [1]),
+            (self._array[:], self._array[:]),
+        ]
+        for pair in pairs:
+            by_testee, by_system = pair
+            func(by_testee); by_system.sort()
+            self.assertEqual(by_testee, by_system)
 
     def test_swap_sort(self):
-        by_testee = self._array[:]
-        by_system = self._array[:]
-        self._sort.swap_sort(by_testee)
-        by_system.sort()
-        self.assertEqual(by_testee, by_system)
+        self.sort_test_helper(self._sort.swap_sort)
 
     def test_bubble_sort(self):
-        by_testee = self._array[:]
-        by_system = self._array[:]
-        self._sort.bubble_sort(by_testee)
-        by_system.sort()
-        self.assertEqual(by_testee, by_system)
+        self.sort_test_helper(self._sort.bubble_sort)
 
     def test_selection_sort(self):
-        by_testee = self._array[:]
-        by_system = self._array[:]
-        self._sort.selection_sort(by_testee)
-        by_system.sort()
-        self.assertEqual(by_testee, by_system)
+        self.sort_test_helper(self._sort.selection_sort)
 
     def test_insertion_sort(self):
-        by_testee = self._array[:]
-        by_system = self._array[:]
-        self._sort.insertion_sort(by_testee)
-        by_system.sort()
-        self.assertEqual(by_testee, by_system)
+        self.sort_test_helper(self._sort.insertion_sort)
+
+    def test_shell_sort(self):
+        self.sort_test_helper(self._sort.shell_sort)
 
     def test_heap_sort(self):
-        by_testee = self._array[:]
-        by_system = self._array[:]
-        self._sort.heap_sort(by_testee)
-        by_system.sort()
-        self.assertEqual(by_testee, by_system)
+        self.sort_test_helper(self._sort.heap_sort)
 
-    def test_qsort(self):
-        by_testee = self._array[:]
-        by_system = self._array[:]
-        self._sort.qsort(by_testee)
-        by_system.sort()
-        self.assertEqual(by_testee, by_system)
+    def test_quick_sort(self):
+        self.sort_test_helper(self._sort.quick_sort)
 
 if __name__ == '__main__':
     runner = unittest.TextTestRunner(verbosity=2)
