@@ -5,12 +5,26 @@
 
 import unittest
 
-class BaseMmrzTestCase(unittest.TestCase):
+class BaseTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        print('######################################################################')
         print("{0}:".format(cls.__name__))
 
-class AlgorithmSortTest(BaseMmrzTestCase):
+class Base64Test(BaseTestCase):
+    def test_base64(self):
+        import base64 as base64
+        import b64.b64 as b64
+        # encode
+        for c in 'AZaz09+-':
+            self.assertEqual(base64.b64encode(c.encode()), b64.base64_encode(c.encode()))
+        self.assertEqual(base64.b64encode(b'Man'), b64.base64_encode(b'Man'))
+        self.assertEqual(base64.b64encode(b'any carnal pleasure.'), b64.base64_encode(b'any carnal pleasure.'))
+        # decode
+        self.assertEqual(base64.b64decode('QQ=='), b64.base64_decode('QQ=='))
+        self.assertEqual(base64.b64decode('TWFu'), b64.base64_decode('TWFu'))
+
+class AlgorithmSortTest(BaseTestCase):
     def __new__(cls, *args, **kwargs):
         import sort.sort as _sort
         cls._sort = _sort
@@ -61,6 +75,7 @@ if __name__ == '__main__':
     runner = unittest.TextTestRunner(verbosity=2)
     load_class = unittest.TestLoader().loadTestsFromTestCase
     suites = [
+        load_class(Base64Test),
         load_class(AlgorithmSortTest),
     ]
     result = [runner.run(suite) for suite in suites]
