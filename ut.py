@@ -74,6 +74,10 @@ class AlgorithmSortTest(BaseTestCase):
     def test_quick_sort(self):
         self.sort_test_helper(self._sort.quick_sort)
 
+    def test_counting_sort(self):
+        self.sort_test_helper(self._sort.counting_sort)
+        self.sort_test_helper(self._sort.counting_sort_stable)
+
 if __name__ == '__main__':
     runner = unittest.TextTestRunner(verbosity=2)
     load_class = unittest.TestLoader().loadTestsFromTestCase

@@ -9,9 +9,10 @@ def timer(func):
     def wrapper(*args, **kwargs):
         import time
         t1 = time.time()
-        func(*args, **kwargs)
+        res = func(*args, **kwargs)
         t2 = time.time()
         print(f"{func.__name__}: {t2 - t1} secs")
+        return res
     return wrapper
 
 @timer
@@ -125,3 +126,40 @@ def quick_sort(a):
         _qsort(a, l+1, br)
     _qsort(a, bl=0, br=len(a)-1)
 
+@timer
+def counting_sort(a):
+    # https://mp.weixin.qq.com/s?__biz=MzIxMjE5MTE1Nw==&mid=2653195533&idx=1&sn=02918dc51b07837ce1119f00d7900dbc
+    if not a:
+        return
+    low = min(a)  # offset
+    high = max(a)
+    counter = [0] * (high - low + 1)
+    for n in a:
+        counter[n-low] += 1
+    a.clear()
+    for i in range(len(counter)):
+        a += [i+low] * counter[i]
+
+@timer
+def counting_sort_stable(a):
+    # https://mp.weixin.qq.com/s?__biz=MzIxMjE5MTE1Nw==&mid=2653195533&idx=1&sn=02918dc51b07837ce1119f00d7900dbc
+    if not a:
+        return
+    low = min(a)
+    high = max(a)
+    counter = [0] * (high - low + 1)
+    for n in a:
+        counter[n-low] += 1
+    for i in range(1, len(counter)):
+        counter[i] += counter[i-1]
+    res = [0] * len(a)
+    for i in range(len(a)-1, -1, -1):
+        counter_idx = a[i] - low
+        res_idx = counter[counter_idx] - 1
+        res[res_idx] = a[i]
+        counter[counter_idx] -= 1
+    a.clear()
+    for n in res:
+        a.append(n)
+
+counting_sort_stable([1])
