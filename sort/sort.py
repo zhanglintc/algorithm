@@ -76,6 +76,31 @@ def heap_sort(a):
         a.append(n)
 
 @timer
+def merge_sort(a):
+    def _sort(a):
+        n = len(a)
+        if n <= 1:
+            return a
+        m = n // 2
+        return _merge(_sort(a[:m]), _sort(a[m:]))
+    def _merge(left, right):
+        res = []
+        while left and right:
+            if left[0] < right[0]:
+                res.append(left.pop(0))
+            else:
+                res.append(right.pop(0))
+        if left:
+            res += left
+        if right:
+            res += right
+        return res
+    res = _sort(a)[:]
+    a.clear()
+    for n in res:
+        a.append(n)
+
+@timer
 def quick_sort(a):
     import sys
     sys.setrecursionlimit(5000)

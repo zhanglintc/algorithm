@@ -68,6 +68,9 @@ class AlgorithmSortTest(BaseTestCase):
     def test_heap_sort(self):
         self.sort_test_helper(self._sort.heap_sort)
 
+    def test_merge_sort(self):
+        self.sort_test_helper(self._sort.merge_sort)
+
     def test_quick_sort(self):
         self.sort_test_helper(self._sort.quick_sort)
 
