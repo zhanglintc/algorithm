@@ -110,19 +110,21 @@ def quick_sort(a):
             if bl >= br:
                 continue
             l, r = bl, br
-            m = a[l]
+            m = l + (r - l) // 2
+            a[l], a[m] = a[m], a[l]
+            p = a[l]
             while l < r:
-                while l < r and a[r] >= m:
+                while l < r and a[r] >= p:
                     r -= 1
                 if l < r:
                     a[l] = a[r]
                     l += 1
-                while l < r and a[l] <= m:
+                while l < r and a[l] <= p:
                     l += 1
                 if l < r:
                     a[r] = a[l]
                     r -= 1
-            a[l] = m
+            a[l] = p
             q.append((bl, l-1))
             q.append((l+1, br))
     _qsort(a, bl=0, br=len(a)-1)
