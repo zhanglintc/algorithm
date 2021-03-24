@@ -43,6 +43,7 @@ class AlgorithmSortTest(BaseTestCase):
         pairs = [
             ([], []),
             ([1], [1]),
+            ([x for x in range(1000, -1, -1)], [x for x in range(1000, -1, -1)]),
             (self._array[:], self._array[:]),
         ]
         for pair in pairs:

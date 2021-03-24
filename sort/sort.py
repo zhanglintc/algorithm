@@ -103,27 +103,28 @@ def merge_sort(a):
 
 @timer
 def quick_sort(a):
-    import sys
-    sys.setrecursionlimit(5000)
     def _qsort(a, bl, br):
-        if bl >= br:
-            return
-        l = bl; r = br
-        m = a[l]
-        while l < r:
-            while l < r and a[r] >= m:
-                r -= 1
-            if l < r:
-                a[l] = a[r]
-                l += 1
-            while l < r and a[l] <= m:
-                l += 1
-            if l < r:
-                a[r] = a[l]
-                r -= 1
-        a[l] = m
-        _qsort(a, bl, l-1)
-        _qsort(a, l+1, br)
+        q = [(bl, br)]
+        while q:
+            bl, br = q.pop(0)
+            if bl >= br:
+                continue
+            l, r = bl, br
+            m = a[l]
+            while l < r:
+                while l < r and a[r] >= m:
+                    r -= 1
+                if l < r:
+                    a[l] = a[r]
+                    l += 1
+                while l < r and a[l] <= m:
+                    l += 1
+                if l < r:
+                    a[r] = a[l]
+                    r -= 1
+            a[l] = m
+            q.append((bl, l-1))
+            q.append((l+1, br))
     _qsort(a, bl=0, br=len(a)-1)
 
 @timer
